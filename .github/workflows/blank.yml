@@ -1,4 +1,4 @@
-name: Copy Secrets to Key Vault3
+name: Copy Secrets to Key Vault
 
 on:
   push:
@@ -27,7 +27,7 @@ jobs:
         id: copy-secrets
         run: |
           DESTINATION_KEYVAULT="destinationkeyvault-4"
-          for SECRET in "${{ steps.get-secrets.outputs.secrets[@] }}"; do
+          for SECRET in "${{ steps.get-secrets.outputs.secrets }}" ; do
             SECRETNAME=$(echo "$SECRET" | sed 's|.*/||')
             SECRET_CHECK=$(az keyvault secret show --vault-name "$DESTINATION_KEYVAULT" --name "$SECRETNAME" --query "value" -o tsv 2>/dev/null)
 
